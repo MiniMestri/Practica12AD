@@ -1,5 +1,39 @@
 var servidor = require('http');
 var archivos = require('fs');
+var mysql = require('mysql')
+
+var conexion = mysql.createConnection({
+                host:"localhost",
+                user:"node",
+                password:"1234",
+                database:"nodejs"
+            });
+
+conexion.connect(function(err){
+                if(err) throw err;
+                console.log("conectado")
+ })
+
+
+function insertarHora(){
+fecha = new Date()
+    conexion.query(`
+        INSERT INTO registro VALUES(
+            NULL,
+            `+fecha.getFullYear()+`,
+            `+(fecha.getMonth()+1)+`,
+            `+fecha.getDate()+`,
+            `+fecha.getHours()+`,
+            `+fecha.getMinutes()+`,
+            `+fecha.getSeconds()+`
+        )
+    `,function(err,result){
+        if(err) throw err;
+        console.log("Se ha insertado el registro")
+        });
+}
+
+insertarHora();
 
 servidor.createServer(function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/html'});
@@ -16,6 +50,26 @@ servidor.createServer(function(req, res) {
                 break;
             case "/blog":
                 enviarArchivo('html/blog.html', res);
+                conexion.query(`
+                SELECT * FROM registro
+            `,function(err,result,fields){
+                if(err) throw err;
+                for(let i = 0;i<result.length;i++){  
+                    res.write(`
+                        <article>
+                            <h2>ID: </h2>
+                            <h2>`+result[i].id+`</h2>
+                            <h2>HORA: </h2><p>`+result[i].hora+`</p>
+                            <h2>MINUTO: </h2><p>`+result[i].minuto+`<p>
+                            <h2>SEGUNDO: </h2><p>`+result[i].segundo+`<p>
+                            <h2>AÑO: </h2><p>`+result[i].fecha+`<p>
+                            <h2>MES: </h2><p>`+result[i].mes+`<p>
+                            <h2>DIA: </h2><p>`+result[i].dia+`<p>
+                        </article>
+                    `)
+               } 
+            })
+                
                 break;
             case "/compra":
                 enviarArchivo('html/tienda.html', res);

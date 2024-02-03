@@ -1,21 +1,14 @@
-<h1>CONTACTO</h1>
-<style>
-    form{
-        text-align: center;
-    }
-    h1{
-        text-align: center;
-        background-color: white;
-    }
-</style>
-<form action="/procesa" method="POST" enctype="application/x-www-form-urlencoded">
-    <label>Escriba su nombre</label><br>
-    <input type="text" name="nombre"><br><br>
-    <label>Escriba el asunto</label><br>
-    <input type="text" name="asunto"><br><br>
-    <label>Escriba su correo electronico</label><br>
-    <input type="email" name="email"><br><br>
-    <label>Escriba su texto</label><br>
-    <textarea name="mensaje"></textarea><br><br>
-    <input type="submit">
-</form>
+
+    <h1>CONTACTO</h1>
+    <form id="formulario" action="#">
+        <label>Escriba su nombre</label><br>
+        <input type="text" name="nombre" required><br><br>
+        <label>Escriba el asunto</label><br>
+        <input type="text" name="asunto" required><br><br>
+        <label>Escriba su correo electrónico</label><br>
+        <input type="email" name="email" required><br><br>
+        <label>Escriba su texto</label><br>
+        <textarea name="mensaje" required></textarea><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+
