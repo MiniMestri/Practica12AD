@@ -56,6 +56,11 @@ servidor.createServer(function(req, res) {
                 if(err) throw err;
                 for(let i = 0;i<result.length;i++){  
                     res.write(`
+                        <style>
+                            article{
+                            display: inline-block;
+                            }
+                        </style>
                         <article>
                             <h2>ID: </h2>
                             <h2>`+result[i].id+`</h2>
